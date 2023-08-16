@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="main">
+
+<head>
+  <title>LungCancerCT</title>
+  <!-- OpenMRS favicon -->
+  <link rel="shortcut icon" type="image/ico" href="img/openmrs-with-title-small.png" />
+  <link rel="icon" type="image/png" href="img/openmrs-with-title-small.png" />
+
+  <!-- AngularJS library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.9/angular.min.js"></script>
+
+  <!-- Your custom CSS file -->
+  <link rel="stylesheet" href="css/lungcancerct.css">
+
+  <!-- Your custom JavaScript file -->
+  <script src="js/index.js"></script>
+</head>
+
+<body ng-controller="SearchController">
+  <header>
+    <div class="logo">
+      <a href="https://openmrs.org/">
+        <img src="img/openmrs-with-title-small.png" alt="OpenMRS Logo" />
+      </a>
+    </div>
+    <h1 class="app-title">Lung Cancer Predictor</h1>
+  </header>
+
+  <main>
+    <div class="search-container">
+      <!-- 输入患者名字的文本框 -->
+      <input type="text" id="patientSearch" ng-model="searchQuery" placeholder="Enter patient name" />
+      <!-- 点击按钮触发搜索患者操作 -->
+      <button ng-click="searchPatient()">Search</button>
+    </div>
+
+    <div class="patient-info" ng-show="searchPerformed">
+      <!-- 患者信息部分，当搜索完成时显示 -->
+      <h2>Patient Information</h2>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Birthday</th>
+          <th>More</th>
+        </tr>
+        <tr ng-repeat="patient in patients">
+          <td>{{ patient.id }}</td>
+          <td>{{ patient.name }}</td>
+          <td>{{ patient.age }}</td>
+          <td>{{ patient.birthday }}</td>
+          <td><button ng-click="viewMoreInfo(patient.id)">More</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="no-patient" ng-show="patients.length === 0 && searchPerformed">
+      <!-- 搜索完成但无患者信息时显示提示信息 -->
+      No patient found.
+    </div>
+
+    <!-- 添加预测按钮 -->
+    <div class="prediction-container">
+      <button ng-click="openPredictionPage()">Predict</button>
+    </div>
+  </main>
+
+</body>
+
+</html>
+
+
